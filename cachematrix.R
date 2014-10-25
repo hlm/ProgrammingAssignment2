@@ -1,15 +1,12 @@
-## These functions can calculate the inverse matrix and
-## cache the results so it does not need to be recalculated
-## when re-used.
+## These functions can calculate the inverse of a matrix and cache 
+## the results, so it does not need to be recalculated when re-used.
 
-## This function returns a closure that contains
-## both the original matrix passed as argument x
-## and its inverse
+## This function returns a closure that holds both the original 
+## matrix passed as argument x and its inverse
 makeCacheMatrix <- function(x = matrix()) {
     xi <- NULL
 
-    ## Sets the enclosed matrix and
-    ## resets any cached inverse
+    ## Sets the enclosed matrix and resets any cached inverse
     set <- function(y) {
       x <<- y
       xi <<- NULL
@@ -18,8 +15,7 @@ makeCacheMatrix <- function(x = matrix()) {
     ## Returns the enclosed matrix
     get <- function() x
 
-    ## Caches the given solution to the
-    ## a inverse matrix
+    ## Caches the given solution to the inverse matrix
     setSolve <- function(solve) xi <<- solve
 
     ## Gets the cached inverse of the matrix
@@ -31,10 +27,9 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## This function expects a closure returned
-## by makeCacheMatrix above and leverages its
-## caching capabilities to return the solution
-## for the inverse matrix
+## This function expects a closure returned by makeCacheMatrix above 
+## and uses its caching capabilities to return the solution for 
+## the inverse matrix
 cacheSolve <- function(x, ...) {
      ## Return a matrix that is the inverse of 'x'
     xi <- x$getSolve()
@@ -61,8 +56,7 @@ print(cm$get())
 xi <- cacheSolve(cm)
 print(cm$getSolve())
 
-## Calculates the inverse again, it should return
-## the cached value
+## Calculates the inverse again, it should return the cached value
 xi <- cacheSolve(cm)
 
 ## Is this really the inverse matrix?
@@ -73,7 +67,7 @@ if(isTRUE(all.equal(xi, mi))) {
 }
 
 # Test #2: With a 3x3 matrix
-message("Test 2: with a 3x3 matrix")
+message("Test #2: with a 3x3 matrix")
 m <- matrix(c(3, 2, 0, 0, 0, 1, 2, -2, 1), 3, 3)
 
 cm <- makeCacheMatrix(m)
@@ -82,8 +76,7 @@ print(cm$get())
 xi <- cacheSolve(cm)
 print(cm$getSolve())
 
-## Calculates the inverse again, it should return
-## the cached value
+## Calculates the inverse again, it should return the cached value
 xi <- cacheSolve(cm)
 
 if(isTRUE(all.equal(m %*% xi, diag(3)))) {
